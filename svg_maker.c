@@ -109,6 +109,8 @@ int main(int argc, char** argv) {
         } else {
             snprintf(tag, MAX_LINE_LENGTH, "<ellipse cx=\"%s\" cy=\"%s\" rx=\"%s\" ry=\"%s\" style=\"%s\"/>", x, y, rx, ry, style);
         }
+
+        free_all(type, x, y, ry, rx, style, NULL);
     } else if (strcmp(type, "polyline") == 0) {
         char** all = (char**) malloc(1024*sizeof(char*));
 
@@ -134,6 +136,13 @@ int main(int argc, char** argv) {
         if (!x || !y) {
             fprintf(stderr, "Error reading input values\n");
             fclose(fptr);
+
+            for (int i = 0; i < count; i++) {
+                free(all[i]);
+            }
+
+            free(all);
+
             free_all(type, x, y, filename, NULL);
             return 1;
         }
@@ -141,14 +150,17 @@ int main(int argc, char** argv) {
         char* style = readline("Input style: ");
 
         if (strcmp(style, "") == 0) {
-            snprintf(tag, MAX_LINE_LENGTH, "<polyline points=\"%s\"/>", join(all, count, " "));
+            snprintf(tag, MAX_LINE_LENGTH, "<polyline points=\"%s\" style=\"fill: none;stroke: #ff0000;\"/>", join(all, count, " "));
         } else {
             snprintf(tag, MAX_LINE_LENGTH, "<polyline points=\"%s\" style=\"%s\"/>", join(all, count, " "), style);
         }
 
+        free_all(type, x, y, NULL);
+
         for (int i = 0; i < count; i++) {
             free(all[i]);
         }
+
         free(all);
     } else if (strcmp(type, "polygon") == 0) {
         char** all = (char**) malloc(1024*sizeof(char*));
@@ -175,6 +187,11 @@ int main(int argc, char** argv) {
         if (!x || !y) {
             fprintf(stderr, "Error reading input values\n");
             fclose(fptr);
+            for (int i = 0; i < count; i++) {
+                free(all[i]);
+            }
+
+            free(all);
             free_all(type, x, y, filename, NULL);
             return 1;
         }
@@ -182,11 +199,12 @@ int main(int argc, char** argv) {
         char* style = readline("Input style: ");
 
         if (strcmp(style, "") == 0) {
-            snprintf(tag, MAX_LINE_LENGTH, "<polygon points=\"%s\"/>", join(all, count, " "));
+            snprintf(tag, MAX_LINE_LENGTH, "<polygon points=\"%s\" style=\"fill: none;stroke: #ff0000;\"/>", join(all, count, " "));
         } else {
             snprintf(tag, MAX_LINE_LENGTH, "<polygon points=\"%s\" style=\"%s\"/>", join(all, count, " "), style);
         }
 
+        free_all(type, x, y, NULL);
         for (int i = 0; i < count; i++) {
             free(all[i]);
         }
