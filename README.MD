@@ -7,6 +7,7 @@ available svg tags:
  - polygon
  - rect
  - circle
+ - ellipse
 
 # Compile
 ```bash
