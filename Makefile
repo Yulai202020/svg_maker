@@ -1,2 +1,2 @@
 all:
-	gcc svg_maker.c -o svg_maker -lreadline
+	gcc svg_maker.c -o svg_maker -lreadline -lm
