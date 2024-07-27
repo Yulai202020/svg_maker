@@ -217,7 +217,7 @@ int main(int argc, char** argv) {
     }
     
     // Format the output
-    snprintf(output, MAX_LINE_LENGTH, "<svg>\n\t%s\n</svg>", tag);
+    snprintf(output, MAX_LINE_LENGTH, "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>Svg image</title>\n</head>\n<body>\n\t<svg>\n\t\t%s\n\t</svg>\n</body>\n</html>", tag);
     fprintf(fptr, "%s", output);
 
     // Clean up
