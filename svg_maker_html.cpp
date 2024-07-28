@@ -39,7 +39,7 @@ void getAllKeys(const YAML::Node& node, std::vector<std::string>& keys, const st
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-        std::cout << "Usage " << argv[0] << " <config_yaml> <output_svg>\n";
+        std::cout << "Usage " << argv[0] << " <config_yaml> <output_html>\n";
         return 1;
     }
 
@@ -110,10 +110,10 @@ int main(int argc, char** argv) {
         if (!result.empty()) {
             result += "\n";
         }
-        result += "\t" + tag;
+        result += "\t\t" + tag;
     }
 
-    std::string format = "<svg>\n{}\n</svg>";
+    std::string format = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>Svg image</title>\n</head>\n<body>\n\t<svg>\n{}\n\t</svg>\n</body>\n</html>";
     std::string final_result = fmt::format(format, result);
 
     std::ofstream outfile(output_file);
@@ -126,3 +126,4 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
