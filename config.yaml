@@ -4,3 +4,6 @@ svg:
     y: 1
     height: 100
     width: 100
+    w:
+      - a
+      - b
