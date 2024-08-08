@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <string.h>
+#include <stdarg.h>
+
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdarg.h>
-#include "string.c"
+
+#include <yulai/string.h> // its my library you can install it from my git https://github.com/Yulai202020/c_course in dir: my_libs/string.c
 
 #define MAX_LINE_LENGTH 1024
 
@@ -25,27 +28,27 @@ int main(int argc, char** argv) {
     char* output = (char*) malloc(MAX_LINE_LENGTH);
     char* tag = (char*) malloc(MAX_LINE_LENGTH);
 
-    if (!tag || !output) {
-        fprintf(stderr, "Memory allocation error\n");
+    if (tag == NULL || output == NULL) {
+        fprintf(stderr, "Memory allocation error.\n");
         return 1;
     }
 
     char* filename = readline("Input filename: ");
     if (!filename) {
-        fprintf(stderr, "Error reading filename\n");
+        fprintf(stderr, "Error reading filename.\n");
         return 1;
     }
 
     FILE* fptr = fopen(filename, "w");
     if (!fptr) {
-        perror("Error opening file");
+        perror("Error opening file.");
         free(filename);
         return 1;
     }
 
     char* type = readline("Input type (circle or rect): ");
     if (!type) {
-        fprintf(stderr, "Error reading type\n");
+        fprintf(stderr, "Error reading type.\n");
         fclose(fptr);
         free(filename);
         return 1;
@@ -113,6 +116,11 @@ int main(int argc, char** argv) {
         free_all(type, x, y, ry, rx, style, NULL);
     } else if (strcmp(type, "polyline") == 0) {
         char** all = (char**) malloc(1024*sizeof(char*));
+
+        if (all == NULL) {
+            fprintf(stderr, "Memory allocation error.\n");
+            return 1;
+        }
 
         char* x = "a";
         char* y = "a";
